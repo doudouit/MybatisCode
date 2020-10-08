@@ -1,0 +1,16 @@
+<mapper namespace="user">
+
+    <!--sql的唯一标示：namespace，Id组成 statementId-->
+    <select id="selectList" resultType="com.gree.pojo.User">
+        select * from user
+    </select>
+
+    <!--
+        User user = new User();
+        user.setId(1);
+        user.setUserName("zhangsan");
+    -->
+    <select id="selectOne" resultType="com.gree.pojo.User" paramterType="com.gree.pojo.User">
+        select * from user where id = #{id} and username = #{username}
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+<mapper>
+
+    <select id="selectList">
+        select * from user
+    </select>
+
+    <select id="selectOne">
+        select * from user where id = ? and password = ?
+    </select>
+</mapper>

@@ -1,0 +1,4 @@
+com\gree\config\XMLConfigBuilder.class
+com\gree\sqlsession\SqlSessionFactory.class
+com\gree\pojo\Configuration.class
+com\gree\pojo\MappedStatement.class
