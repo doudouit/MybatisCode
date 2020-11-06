@@ -29,8 +29,39 @@ public class XMLMapperBuilder {
 
         String namespace = rootElement.attributeValue("namespace");
 
+        // 解析select标签
         List<Element> list = rootElement.selectNodes("//select");
         for (Element element : list) {
+            String id = element.attributeValue("id");
+            String resultType = element.attributeValue("resultType");
+            String paramerType = element.attributeValue("paramterType");
+            String sqlText = element.getTextTrim();
+            MappedStatement mappedStatement = new MappedStatement();
+            mappedStatement.setId(id);
+            mappedStatement.setResultType(resultType);
+            mappedStatement.setParamterType(paramerType);
+            mappedStatement.setSql(sqlText);
+            String key = namespace + "." + id;
+            configuration.getMappedStatementMap().put(key,mappedStatement);
+        }
+
+        List<Element> list1 = rootElement.selectNodes("//update");
+        for (Element element : list1) {
+            String id = element.attributeValue("id");
+            String resultType = element.attributeValue("resultType");
+            String paramerType = element.attributeValue("paramterType");
+            String sqlText = element.getTextTrim();
+            MappedStatement mappedStatement = new MappedStatement();
+            mappedStatement.setId(id);
+            mappedStatement.setResultType(resultType);
+            mappedStatement.setParamterType(paramerType);
+            mappedStatement.setSql(sqlText);
+            String key = namespace + "." + id;
+            configuration.getMappedStatementMap().put(key,mappedStatement);
+        }
+
+        List<Element> list2 = rootElement.selectNodes("//delete");
+        for (Element element : list2) {
             String id = element.attributeValue("id");
             String resultType = element.attributeValue("resultType");
             String paramerType = element.attributeValue("paramterType");

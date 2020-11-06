@@ -1,7 +1,32 @@
-<mapper namespace="user">
+<!--<mapper namespace="user">
+
+    &lt;!&ndash;sql的唯一标示：namespace，Id组成 statementId&ndash;&gt;
+    <select id="selectList" resultType="com.gree.pojo.User">
+        select * from user
+    </select>
+
+    &lt;!&ndash;
+        User user = new User();
+        user.setId(1);
+        user.setUserName("zhangsan");
+    &ndash;&gt;
+    <select id="selectOne" resultType="com.gree.pojo.User" paramterType="com.gree.pojo.User">
+        select * from user where id = #{id} and username = #{username}
+    </select>
+
+    <delete id = "delete" resultType = "java.lang.Integer" paramterType="com.gree.pojo.User">
+        delete from user where id = #{id} and username = #{username}
+    </delete>
+
+    <update id = "updateById" resultType="java.lang.Integer" paramterType="com.gree.pojo.User">
+        update user set username = #{username} ,password = #{password}, birthday = #{birthday} where id = #{id}
+    </update>
+</mapper>-->
+
+<mapper namespace="com.gree.dao.IUserDao">
 
     <!--sql的唯一标示：namespace，Id组成 statementId-->
-    <select id="selectList" resultType="com.gree.pojo.User">
+    <select id="findAll" resultType="com.gree.pojo.User">
         select * from user
     </select>
 
@@ -10,7 +35,15 @@
         user.setId(1);
         user.setUserName("zhangsan");
     -->
-    <select id="selectOne" resultType="com.gree.pojo.User" paramterType="com.gree.pojo.User">
+    <select id="findByCondition" resultType="com.gree.pojo.User" paramterType="com.gree.pojo.User">
         select * from user where id = #{id} and username = #{username}
     </select>
+
+    <delete id = "deleteByCondition" resultType = "java.lang.Integer" paramterType="com.gree.pojo.User">
+        delete from user where id = #{id} and username = #{username}
+    </delete>
+
+    <update id = "updateById" resultType="java.lang.Integer" paramterType="com.gree.pojo.User">
+        update user set username = #{username} ,password = #{password}, birthday = #{birthday} where id = #{id}
+    </update>
 </mapper>

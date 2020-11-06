@@ -83,6 +83,47 @@ public class simpleExecutor implements Executor {
         return (List<E>) objects;
     }
 
+    @Override
+    public int delete(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, Exception {
+        // 1.注册驱动，获取连接
+        Connection connection = configuration.getDataSource().getConnection();
+
+        // 2. 获取sql语句
+        //转换sql语句 #{} --》 ？
+        String sql = mappedStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+
+        // 3.获取预处理对象 preparedStatement
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+
+        // 4. 设置对象
+        // 获取到参数的全路径
+        String paramterType = mappedStatement.getParamterType();
+        Class<?> paramterTypeClass = getClassType(paramterType);
+
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        for (int i = 0; i < parameterMappingList.size(); i++) {
+            ParameterMapping parameterMapping = parameterMappingList.get(i);
+            String content = parameterMapping.getContent();
+
+            // 反射
+            Field declaredField = paramterTypeClass.getDeclaredField(content);
+            // 暴力访问
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(params[0]);
+
+            preparedStatement.setObject(i+1, o);
+        }
+        // 5. 执行sql
+        int i = preparedStatement.executeUpdate();
+        return i;
+    }
+
+    @Override
+    public int update(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, Exception {
+        return delete(configuration, mappedStatement, params);
+    }
+
     private Class<?> getClassType(String paramterType) throws ClassNotFoundException {
         if (paramterType != null) {
             Class<?> aClass = Class.forName(paramterType);

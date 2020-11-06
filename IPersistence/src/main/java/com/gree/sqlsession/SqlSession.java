@@ -14,4 +14,10 @@ public interface SqlSession {
 
     // 根据条件查询单个记录
     public  <T> T selectOne(String satementId,Object... params) throws Exception;
+
+    public int delete(String statementId, Object... params) throws Exception;
+
+    public int updata(String statementId, Object... params) throws Exception;
+
+    public <T> T getMapper(Class<?> mapperClass);
 }
